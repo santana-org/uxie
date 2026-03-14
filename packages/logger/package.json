@@ -1,5 +1,5 @@
 {
-  "name": "@santa-org/logger",
+  "name": "@santana-org/logger",
   "version": "0.1.0",
   "description": "A lightweight, configurable logger for Node.js and modern JavaScript environments",
   "license": "MIT",
@@ -46,6 +46,6 @@
     "registry": "https://registry.npmjs.org/"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=25"
   }
 }
