@@ -1,6 +1,6 @@
 {
   "name": "@santana-org/logger",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A lightweight, configurable logger for Node.js and modern JavaScript environments",
   "license": "MIT",
   "repository": {
@@ -8,7 +8,14 @@
     "url": "git+https://github.com/santana-org/uxie.git",
     "directory": "packages/logger"
   },
-  "keywords": ["logger", "logging", "typescript", "esm", "colorized", "santa-org"],
+  "keywords": [
+    "logger",
+    "logging",
+    "typescript",
+    "esm",
+    "colorized",
+    "santa-org"
+  ],
   "type": "module",
   "exports": {
     ".": {
@@ -25,7 +32,10 @@
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
-  "files": ["dist", "README.md"],
+  "files": [
+    "dist",
+    "README.md"
+  ],
   "scripts": {
     "build": "unbuild",
     "dev": "unbuild --stub",
