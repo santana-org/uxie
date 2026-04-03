@@ -1,4 +1,4 @@
-import { createDefaultFormatter, defaultFormatter } from "./formatters.js"
+import { createDefaultFormatter } from "./formatters.js"
 import { isLevelEnabled } from "./levels.js"
 import type { LogEntry, LogLevel, Logger, LoggerOptions, Writer } from "./types.js"
 
