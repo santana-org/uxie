@@ -1,6 +1,13 @@
 import { createDefaultFormatter, createJsonFormatter } from "./formatters.js"
 import { isLevelEnabled } from "./levels.js"
-import type { LogEntry, LogLevel, Logger, LoggerOptions, Writer } from "./types.js"
+import type {
+  LogEntry,
+  LogLevel,
+  Logger,
+  LoggerOptions,
+  RedactionPattern,
+  Writer,
+} from "./types.js"
 
 function isTTY(): boolean {
   return process.stdout.isTTY === true
@@ -26,6 +33,7 @@ export function createLogger(options: LoggerOptions = {}): Logger {
     colors = isTTY(),
     dateFormat,
     dateFormatter,
+    redact,
     formatter,
     writer = defaultWriter(),
   } = options
@@ -33,12 +41,16 @@ export function createLogger(options: LoggerOptions = {}): Logger {
   const formatterConfig: {
     dateFormat?: import("./date-formatter.js").DateFormat
     dateFormatter?: import("./date-formatter.js").DateFormatterFn
+    redact?: RedactionPattern[]
   } = {}
   if (dateFormat !== undefined) {
     formatterConfig.dateFormat = dateFormat
   }
   if (dateFormatter !== undefined) {
     formatterConfig.dateFormatter = dateFormatter
+  }
+  if (redact !== undefined) {
+    formatterConfig.redact = redact
   }
 
   const resolvedFormatter =
@@ -92,6 +104,9 @@ export function createLogger(options: LoggerOptions = {}): Logger {
       }
       if (formatter !== undefined) {
         childOptions.formatter = formatter
+      }
+      if (redact !== undefined) {
+        childOptions.redact = redact
       }
       return createLogger(childOptions)
     },

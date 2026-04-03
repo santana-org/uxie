@@ -1,6 +1,7 @@
 import type { DateFormat, DateFormatterFn } from "./date-formatter.js"
 
 export type LogLevel = "debug" | "info" | "warn" | "error" | "success"
+export type RedactionPattern = string | RegExp
 
 export interface LogEntry {
   level: LogLevel
@@ -23,6 +24,8 @@ export interface LoggerOptions {
   dateFormat?: DateFormat
   /** Custom date formatter function. Overrides dateFormat when provided. */
   dateFormatter?: DateFormatterFn
+  /** Redact sensitive object keys from logged args (e.g. ["password", /token/i]). */
+  redact?: RedactionPattern[]
   /** Whether to colorize output. Defaults to true when a TTY is detected. */
   colors?: boolean
   /** Custom formatter. Overrides the built-in formatter when provided. */

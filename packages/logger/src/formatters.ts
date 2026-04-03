@@ -1,4 +1,4 @@
-import type { Formatter, LogEntry, LogLevel } from "./types.js"
+import type { Formatter, LogEntry, LogLevel, RedactionPattern } from "./types.js"
 import {
   formatDate,
   type DateFormat,
@@ -32,6 +32,7 @@ function colorize(text: string, color: string, enabled: boolean): string {
 interface FormatterConfig {
   dateFormat?: DateFormat
   dateFormatter?: DateFormatterFn
+  redact?: RedactionPattern[]
 }
 
 interface JsonLogOutput {
@@ -71,7 +72,10 @@ function createDefaultFormatter(config: FormatterConfig = {}): Formatter {
     if (entry.args.length > 0) {
       const extras = entry.args
         .map((a) => {
-          const serialized = serializeValue(a)
+          const serialized =
+            config.redact !== undefined
+              ? serializeValue(a, { redact: config.redact })
+              : serializeValue(a)
           return typeof serialized === "object"
             ? JSON.stringify(serialized, null, 2)
             : String(serialized)
@@ -110,7 +114,11 @@ function createJsonFormatter(config: FormatterConfig = {}): Formatter {
     }
 
     if (entry.args.length > 0) {
-      output.data = entry.args.map(serializeValue)
+      output.data = entry.args.map((a) =>
+        config.redact !== undefined
+          ? serializeValue(a, { redact: config.redact })
+          : serializeValue(a),
+      )
     }
 
     return JSON.stringify(output)
