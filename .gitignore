@@ -29,5 +29,3 @@ Thumbs.db
 # Test coverage
 coverage/
 
-# Changesets
-.changeset/*.md
