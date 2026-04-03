@@ -5,6 +5,7 @@ import {
   type DateFormatterFn,
   type DateFormatterConfig,
 } from "./date-formatter.js"
+import { serializeValue } from "./serializer.js"
 
 const ANSI_RESET = "\x1b[0m"
 
@@ -31,6 +32,14 @@ function colorize(text: string, color: string, enabled: boolean): string {
 interface FormatterConfig {
   dateFormat?: DateFormat
   dateFormatter?: DateFormatterFn
+}
+
+interface JsonLogOutput {
+  level: LogLevel
+  message: string
+  timestamp?: string
+  label?: string
+  data?: unknown[]
 }
 
 function createDefaultFormatter(config: FormatterConfig = {}): Formatter {
@@ -61,7 +70,12 @@ function createDefaultFormatter(config: FormatterConfig = {}): Formatter {
 
     if (entry.args.length > 0) {
       const extras = entry.args
-        .map((a) => (typeof a === "object" ? JSON.stringify(a, null, 2) : String(a)))
+        .map((a) => {
+          const serialized = serializeValue(a)
+          return typeof serialized === "object"
+            ? JSON.stringify(serialized, null, 2)
+            : String(serialized)
+        })
         .join(" ")
       parts.push(extras)
     }
@@ -72,3 +86,35 @@ function createDefaultFormatter(config: FormatterConfig = {}): Formatter {
 
 export { createDefaultFormatter }
 export const defaultFormatter = createDefaultFormatter()
+
+function createJsonFormatter(config: FormatterConfig = {}): Formatter {
+  return (entry: LogEntry): string => {
+    const output: JsonLogOutput = {
+      level: entry.level,
+      message: entry.message,
+    }
+
+    if (entry.timestamp) {
+      const formatConfig: DateFormatterConfig = {}
+      if (config.dateFormat !== undefined) {
+        formatConfig.format = config.dateFormat
+      }
+      if (config.dateFormatter !== undefined) {
+        formatConfig.formatter = config.dateFormatter
+      }
+      output.timestamp = formatDate(entry.timestamp, formatConfig)
+    }
+
+    if (entry.label) {
+      output.label = entry.label
+    }
+
+    if (entry.args.length > 0) {
+      output.data = entry.args.map(serializeValue)
+    }
+
+    return JSON.stringify(output)
+  }
+}
+
+export { createJsonFormatter }

@@ -1,4 +1,4 @@
-import { createDefaultFormatter } from "./formatters.js"
+import { createDefaultFormatter, createJsonFormatter } from "./formatters.js"
 import { isLevelEnabled } from "./levels.js"
 import type { LogEntry, LogLevel, Logger, LoggerOptions, Writer } from "./types.js"
 
@@ -22,6 +22,7 @@ export function createLogger(options: LoggerOptions = {}): Logger {
     level: minLevel = "debug",
     label,
     timestamps = false,
+    format = "text",
     colors = isTTY(),
     dateFormat,
     dateFormatter,
@@ -39,7 +40,12 @@ export function createLogger(options: LoggerOptions = {}): Logger {
   if (dateFormatter !== undefined) {
     formatterConfig.dateFormatter = dateFormatter
   }
-  const resolvedFormatter = formatter || createDefaultFormatter(formatterConfig)
+
+  const resolvedFormatter =
+    formatter ??
+    (format === "json"
+      ? createJsonFormatter(formatterConfig)
+      : createDefaultFormatter(formatterConfig))
 
   function log(logLevel: LogLevel, message: string, ...args: unknown[]): void {
     if (!isLevelEnabled(logLevel, minLevel)) {
@@ -74,6 +80,7 @@ export function createLogger(options: LoggerOptions = {}): Logger {
         level: minLevel,
         label: childLabel,
         timestamps,
+        format,
         colors,
         writer,
       }

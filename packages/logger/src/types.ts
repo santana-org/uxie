@@ -17,6 +17,8 @@ export interface LoggerOptions {
   label?: string
   /** Whether to include timestamps in output. Defaults to false. */
   timestamps?: boolean
+  /** Output format: "text" (default) or "json". */
+  format?: "text" | "json"
   /** Timestamp format: "iso" | "time" | "datetime". Defaults to "iso". */
   dateFormat?: DateFormat
   /** Custom date formatter function. Overrides dateFormat when provided. */
