@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from "vitest"
-import { createLogger } from "../logger.js"
+import { createLogger } from "../core/create-logger.js"
 import type { LogEntry } from "../types.js"
 import { makeWriter } from "./test-utils.js"
 

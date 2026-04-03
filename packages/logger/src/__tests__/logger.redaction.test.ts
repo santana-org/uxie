@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest"
-import { createLogger } from "../logger.js"
+import { createLogger } from "../core/create-logger.js"
 import { makeWriter } from "./test-utils.js"
 
 describe("redaction", () => {
@@ -10,9 +10,9 @@ describe("redaction", () => {
     logger.info("login", { user: "alejandro", password: "1234", token: "secret" })
 
     expect(out).toHaveLength(1)
-    expect(out[0]).toContain("\"password\": \"[REDACTED]\"")
-    expect(out[0]).toContain("\"token\": \"[REDACTED]\"")
-    expect(out[0]).toContain("\"user\": \"alejandro\"")
+    expect(out[0]).toContain('"password": "[REDACTED]"')
+    expect(out[0]).toContain('"token": "[REDACTED]"')
+    expect(out[0]).toContain('"user": "alejandro"')
   })
 
   it("redacts sensitive keys in JSON format", () => {

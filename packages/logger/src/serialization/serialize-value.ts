@@ -1,4 +1,5 @@
-import type { RedactionPattern } from "./types.js"
+import type { RedactionPattern } from "../types.js"
+import { shouldRedactKey } from "./redaction.js"
 
 export interface SerializedError {
   name: string
@@ -16,15 +17,6 @@ interface JsonSerializable {
 
 function hasToJSON(value: object): value is JsonSerializable {
   return "toJSON" in value && typeof value.toJSON === "function"
-}
-
-function shouldRedactKey(key: string, patterns: RedactionPattern[] = []): boolean {
-  return patterns.some((pattern) => {
-    if (typeof pattern === "string") {
-      return pattern.toLowerCase() === key.toLowerCase()
-    }
-    return pattern.test(key)
-  })
 }
 
 export function isError(value: unknown): value is Error {

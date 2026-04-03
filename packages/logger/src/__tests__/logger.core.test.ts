@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest"
-import { createLogger } from "../logger.js"
+import { createLogger } from "../core/create-logger.js"
 import { makeWriter } from "./test-utils.js"
 
 describe("createLogger", () => {
