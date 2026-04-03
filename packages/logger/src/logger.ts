@@ -1,4 +1,4 @@
-import { defaultFormatter } from "./formatters.js"
+import { createDefaultFormatter, defaultFormatter } from "./formatters.js"
 import { isLevelEnabled } from "./levels.js"
 import type { LogEntry, LogLevel, Logger, LoggerOptions, Writer } from "./types.js"
 
@@ -23,26 +23,40 @@ export function createLogger(options: LoggerOptions = {}): Logger {
     label,
     timestamps = false,
     colors = isTTY(),
-    formatter = defaultFormatter,
+    dateFormat,
+    dateFormatter,
+    formatter,
     writer = defaultWriter(),
   } = options
 
-  function log(level: LogLevel, message: string, ...args: unknown[]): void {
-    if (!isLevelEnabled(level, minLevel)) {
+  const formatterConfig: {
+    dateFormat?: import("./date-formatter.js").DateFormat
+    dateFormatter?: import("./date-formatter.js").DateFormatterFn
+  } = {}
+  if (dateFormat !== undefined) {
+    formatterConfig.dateFormat = dateFormat
+  }
+  if (dateFormatter !== undefined) {
+    formatterConfig.dateFormatter = dateFormatter
+  }
+  const resolvedFormatter = formatter || createDefaultFormatter(formatterConfig)
+
+  function log(logLevel: LogLevel, message: string, ...args: unknown[]): void {
+    if (!isLevelEnabled(logLevel, minLevel)) {
       return
     }
 
     const entry: LogEntry = {
-      level,
+      level: logLevel,
       message,
       ...(label !== undefined ? { label } : {}),
       ...(timestamps ? { timestamp: new Date() } : {}),
       args,
     }
 
-    const formatted = formatter(entry, colors)
+    const formatted = resolvedFormatter(entry, colors)
 
-    if (isErrorLevel(level)) {
+    if (isErrorLevel(logLevel)) {
       writer.err(formatted)
     } else {
       writer.out(formatted)
@@ -55,14 +69,24 @@ export function createLogger(options: LoggerOptions = {}): Logger {
     warn: (message, ...args) => log("warn", message, ...args),
     error: (message, ...args) => log("error", message, ...args),
     success: (message, ...args) => log("success", message, ...args),
-    child: (childLabel) =>
-      createLogger({
+    child: (childLabel) => {
+      const childOptions: LoggerOptions = {
         level: minLevel,
         label: childLabel,
         timestamps,
         colors,
-        formatter,
         writer,
-      }),
+      }
+      if (dateFormat !== undefined) {
+        childOptions.dateFormat = dateFormat
+      }
+      if (dateFormatter !== undefined) {
+        childOptions.dateFormatter = dateFormatter
+      }
+      if (formatter !== undefined) {
+        childOptions.formatter = formatter
+      }
+      return createLogger(childOptions)
+    },
   }
 }

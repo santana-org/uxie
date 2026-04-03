@@ -1,4 +1,5 @@
-export { defaultFormatter } from "./formatters.js"
+export { defaultFormatter, createDefaultFormatter } from "./formatters.js"
 export { LOG_LEVELS, isLevelEnabled } from "./levels.js"
 export { createLogger } from "./logger.js"
 export type { Formatter, LogEntry, LogLevel, Logger, LoggerOptions, Writer } from "./types.js"
+export type { DateFormat, DateFormatterFn, DateFormatterConfig } from "./date-formatter.js"

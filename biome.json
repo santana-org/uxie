@@ -31,13 +31,6 @@
     }
   },
   "files": {
-    "ignore": [
-      "node_modules",
-      "dist",
-      ".turbo",
-      "*.tsbuildinfo",
-      "coverage",
-      "pnpm-lock.yaml"
-    ]
+    "ignore": ["node_modules", "dist", ".turbo", "*.tsbuildinfo", "coverage", "pnpm-lock.yaml"]
   }
 }

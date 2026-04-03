@@ -1,3 +1,5 @@
+import type { DateFormat, DateFormatterFn } from "./date-formatter.js"
+
 export type LogLevel = "debug" | "info" | "warn" | "error" | "success"
 
 export interface LogEntry {
@@ -15,6 +17,10 @@ export interface LoggerOptions {
   label?: string
   /** Whether to include timestamps in output. Defaults to false. */
   timestamps?: boolean
+  /** Timestamp format: "iso" | "time" | "datetime". Defaults to "iso". */
+  dateFormat?: DateFormat
+  /** Custom date formatter function. Overrides dateFormat when provided. */
+  dateFormatter?: DateFormatterFn
   /** Whether to colorize output. Defaults to true when a TTY is detected. */
   colors?: boolean
   /** Custom formatter. Overrides the built-in formatter when provided. */

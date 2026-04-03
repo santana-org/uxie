@@ -1,4 +1,10 @@
 import type { Formatter, LogEntry, LogLevel } from "./types.js"
+import {
+  formatDate,
+  type DateFormat,
+  type DateFormatterFn,
+  type DateFormatterConfig,
+} from "./date-formatter.js"
 
 const ANSI_RESET = "\x1b[0m"
 
@@ -22,30 +28,47 @@ function colorize(text: string, color: string, enabled: boolean): string {
   return enabled ? `${color}${text}${ANSI_RESET}` : text
 }
 
-export const defaultFormatter: Formatter = (entry: LogEntry, colors: boolean): string => {
-  const parts: string[] = []
-
-  if (entry.timestamp) {
-    const ts = entry.timestamp.toISOString()
-    parts.push(colorize(ts, "\x1b[2m", colors))
-  }
-
-  const levelColor = LEVEL_COLORS[entry.level]
-  const levelLabel = LEVEL_LABELS[entry.level]
-  parts.push(colorize(levelLabel, levelColor, colors))
-
-  if (entry.label) {
-    parts.push(colorize(`[${entry.label}]`, "\x1b[35m", colors))
-  }
-
-  parts.push(entry.message)
-
-  if (entry.args.length > 0) {
-    const extras = entry.args
-      .map((a) => (typeof a === "object" ? JSON.stringify(a, null, 2) : String(a)))
-      .join(" ")
-    parts.push(extras)
-  }
-
-  return parts.join(" ")
+interface FormatterConfig {
+  dateFormat?: DateFormat
+  dateFormatter?: DateFormatterFn
 }
+
+function createDefaultFormatter(config: FormatterConfig = {}): Formatter {
+  return (entry: LogEntry, colors: boolean): string => {
+    const parts: string[] = []
+
+    if (entry.timestamp) {
+      const formatConfig: DateFormatterConfig = {}
+      if (config.dateFormat !== undefined) {
+        formatConfig.format = config.dateFormat
+      }
+      if (config.dateFormatter !== undefined) {
+        formatConfig.formatter = config.dateFormatter
+      }
+      const ts = formatDate(entry.timestamp, formatConfig)
+      parts.push(colorize(ts, "\x1b[2m", colors))
+    }
+
+    const levelColor = LEVEL_COLORS[entry.level]
+    const levelLabel = LEVEL_LABELS[entry.level]
+    parts.push(colorize(levelLabel, levelColor, colors))
+
+    if (entry.label) {
+      parts.push(colorize(`[${entry.label}]`, "\x1b[35m", colors))
+    }
+
+    parts.push(entry.message)
+
+    if (entry.args.length > 0) {
+      const extras = entry.args
+        .map((a) => (typeof a === "object" ? JSON.stringify(a, null, 2) : String(a)))
+        .join(" ")
+      parts.push(extras)
+    }
+
+    return parts.join(" ")
+  }
+}
+
+export { createDefaultFormatter }
+export const defaultFormatter = createDefaultFormatter()

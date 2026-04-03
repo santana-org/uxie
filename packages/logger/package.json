@@ -8,14 +8,7 @@
     "url": "git+https://github.com/santana-org/uxie.git",
     "directory": "packages/logger"
   },
-  "keywords": [
-    "logger",
-    "logging",
-    "typescript",
-    "esm",
-    "colorized",
-    "santa-org"
-  ],
+  "keywords": ["logger", "logging", "typescript", "esm", "colorized", "santa-org"],
   "type": "module",
   "exports": {
     ".": {
@@ -32,10 +25,7 @@
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
-  "files": [
-    "dist",
-    "README.md"
-  ],
+  "files": ["dist", "README.md"],
   "scripts": {
     "build": "unbuild",
     "dev": "unbuild --stub",
