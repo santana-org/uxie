@@ -1,6 +1,6 @@
 {
   "name": "@santana-org/colors",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Minimal TypeScript color utility library with parsing, conversion, and fluent manipulation",
   "license": "MIT",
   "repository": {

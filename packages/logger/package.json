@@ -1,6 +1,6 @@
 {
   "name": "@santana-org/logger",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "A lightweight, configurable logger for Node.js and modern JavaScript environments",
   "license": "MIT",
   "repository": {
