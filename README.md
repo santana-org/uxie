@@ -17,7 +17,8 @@
 
 | Package | Version | Description |
 |---|---|---|
-| [`@santana-org/logger`](./packages/logger) | [![npm](https://img.shields.io/npm/v/@santana-org/logger?color=CB3837&labelColor=CB3837&logo=npm&logoColor=white)](https://www.npmjs.com/package/@santana-org/logger) | Lightweight, zero-dependency logger |
+| [`@santana-org/colors`](./packages/colors) | [![npm](https://img.shields.io/npm/v/@santana-org/colors?color=CB3837&labelColor=CB3837&logo=npm&logoColor=white)](https://www.npmjs.com/package/@santana-org/colors) | Small ANSI color utilities for terminal output |
+| [`@santana-org/logger`](./packages/logger) | [![npm](https://img.shields.io/npm/v/@santana-org/logger?color=CB3837&labelColor=CB3837&logo=npm&logoColor=white)](https://www.npmjs.com/package/@santana-org/logger) | Lightweight, configurable logger |
 
 ---
 
