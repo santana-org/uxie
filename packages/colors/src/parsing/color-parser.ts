@@ -22,13 +22,21 @@ function parseHexToState(input: string): ColorState | null {
     return null
   }
 
-  const value = match[1]!
+  const value = match[1]
+  if (value === undefined) {
+    return null
+  }
 
   if (value.length === 3 || value.length === 4) {
-    const r = Number.parseInt(value[0]! + value[0]!, 16)
-    const g = Number.parseInt(value[1]! + value[1]!, 16)
-    const b = Number.parseInt(value[2]! + value[2]!, 16)
-    const a = value.length === 4 ? Number.parseInt(value[3]! + value[3]!, 16) / 255 : 1
+    const rHex = value.charAt(0)
+    const gHex = value.charAt(1)
+    const bHex = value.charAt(2)
+    const aHex = value.charAt(3)
+
+    const r = Number.parseInt(rHex + rHex, 16)
+    const g = Number.parseInt(gHex + gHex, 16)
+    const b = Number.parseInt(bHex + bHex, 16)
+    const a = value.length === 4 ? Number.parseInt(aHex + aHex, 16) / 255 : 1
     return toState({ r, g, b }, a)
   }
 
