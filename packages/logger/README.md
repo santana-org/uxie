@@ -5,8 +5,8 @@
 
   <strong>@santana-org/logger</strong>
 
-  <p>A lightweight, zero-dependency logger for Node.js — built to stay out of your way.</p>
-  
+  <p>A lightweight, configurable logger for Node.js — built to stay out of your way.</p>
+
   [![npm](https://img.shields.io/npm/v/@santana-org/logger?color=CB3837&labelColor=CB3837&logo=npm&logoColor=white)](https://www.npmjs.com/package/@santana-org/logger)
   [![license](https://img.shields.io/badge/license-MIT-blue?color=3b82f6&labelColor=1d4ed8)](./LICENSE)
   [![ESM](https://img.shields.io/badge/ESM-first-green?color=16a34a&labelColor=15803d)](https://nodejs.org/api/esm.html)
@@ -96,11 +96,11 @@ const log = createLogger({
 
 ## 🏗️ Design decisions
 
-- **Zero dependencies.** No transitive risk, no bloat.
+- **Small dependency surface.** Uses a tiny shared `@santana-org/colors` utility package.
 - **ESM-first.** CJS interop included, but the package is written for modern runtimes.
 - **TTY-aware colors.** Colors auto-disable when piped — no `NO_COLOR` hacks needed.
 - **Composable, not configurable-forever.** One factory, one logger, one job.
 
 ## 📄 License
- 
+
 MIT © [santana-org](https://github.com/santana-org) — contributions are welcome, see [CONTRIBUTING](https://github.com/santana-org/.github/blob/main/CONTRIBUTING.md).

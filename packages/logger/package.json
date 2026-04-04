@@ -44,6 +44,9 @@
     "typecheck": "tsc --noEmit",
     "packcheck": "publint"
   },
+  "dependencies": {
+    "@santana-org/colors": "workspace:*"
+  },
   "devDependencies": {
     "@types/node": "^22.13.10",
     "publint": "^0.3.4",
