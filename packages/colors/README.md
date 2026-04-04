@@ -1,78 +1,67 @@
 <div align="center">
-	<img src="https://raw.githubusercontent.com/santana-org/.github/main/profile/santana-logo.png" alt="Santana" width="980" />
-	<br/>
-	<br/>
+  <img src="https://raw.githubusercontent.com/santana-org/.github/main/profile/santana-logo.png" alt="Santana" width="980" />
+  <br/><br/>
+  <strong>@santana-org/colors</strong>
+  <p>Chainable color toolkit for TypeScript — parse, convert, transform, and print.</p>
 
-	<strong>@santana-org/colors</strong>
-
-	<p>A small, chainable color toolkit for TypeScript — parse, convert, transform, and print.</p>
-
-	[![npm](https://img.shields.io/npm/v/@santana-org/colors?color=CB3837&labelColor=CB3837&logo=npm&logoColor=white)](https://www.npmjs.com/package/@santana-org/colors)
-	[![license](https://img.shields.io/badge/license-MIT-blue?color=3b82f6&labelColor=1d4ed8)](./LICENSE)
-	[![ESM](https://img.shields.io/badge/ESM-first-green?color=16a34a&labelColor=15803d)](https://nodejs.org/api/esm.html)
-
+  [![npm](https://img.shields.io/npm/v/@santana-org/colors?color=CB3837&labelColor=CB3837&logo=npm&logoColor=white)](https://www.npmjs.com/package/@santana-org/colors)
+  [![license](https://img.shields.io/badge/license-MIT-blue?color=3b82f6&labelColor=1d4ed8)](./LICENSE)
+  [![ESM](https://img.shields.io/badge/ESM-first-green?color=16a34a&labelColor=15803d)](https://nodejs.org/api/esm.html)
 </div>
 
-## 📦 Install
+---
 
+## 📦 Install
 ```sh
 npm install @santana-org/colors
 pnpm add @santana-org/colors
 ```
 
-## 🚀 Quickstart
-
+## 🚀 Usage
 ```ts
 import { color } from "@santana-org/colors"
 
-color("#ff0000").lighten(0.2).toHex() // #ff6666
-color("rgb(255,0,0)").toHsl() // hsl(0, 100%, 50%)
-color("hsl(0, 100%, 50%)").toRgb() // rgb(255, 0, 0)
+color("#ff0000").lighten(0.2).toHex()           // "#ff6666"
+color("rgb(255,0,0)").toHsl()                   // "hsl(0, 100%, 50%)"
+color("hsl(0,100%,50%)").mix("#0000ff").toHex() // "#7f007f"
 ```
 
 ## 📖 API
 
 ### `color(input)`
 
-Creates an immutable, chainable color object.
+Accepts `#hex`, `#hexa`, `rgb()`, `rgba()`, `hsl()`, `hsla()`. Returns an immutable, chainable color object.
 
-#### Input formats
+| Method | Description |
+|---|---|
+| `lighten(n)` / `darken(n)` | Adjust lightness by `n` (0–1) |
+| `saturate(n)` / `desaturate(n)` | Adjust saturation by `n` (0–1) |
+| `invert()` | Invert the color |
+| `mix(color, weight?)` | Mix with another color |
+| `alpha(n)` | Set alpha channel |
+| `toHex()` / `toHexa()` | Output as hex string |
+| `toRgb()` / `toRgba()` | Output as `rgb()` string |
+| `toHsl()` / `toHsla()` | Output as `hsl()` string |
+| `toRgbObject()` / `toHslObject()` | Output as plain object |
+| `toState()` / `toString()` | Internal state / default string |
 
-- HEX: `#fff`, `#ffffff`, `#rgba`, `#rrggbbaa`
-- RGB: `rgb(r,g,b)`, `rgba(r,g,b,a)`
-- HSL: `hsl(h,s%,l%)`, `hsla(h,s%,l%,a)`
+### 🔧 Low-level helpers
+```ts
+import { parseHex, rgbToHsl, lighten, mix, paint } from "@santana-org/colors"
+```
 
-#### Chain methods
+- **Parsing** — `parseColor`, `parseHex`, `parseRgb`, `parseHsl`
+- **Conversion** — `rgbToHex`, `rgbToHsl`, `hslToRgb`
+- **Manipulation** — `lighten`, `darken`, `saturate`, `desaturate`, `invert`, `mix`, `withAlpha`
+- **ANSI terminal** — `paint`, `ansi`, `dim`, `gray`, `cyan`, `green`, `yellow`, `red`, `magenta`
 
-- `lighten(amount)` / `darken(amount)`
-- `saturate(amount)` / `desaturate(amount)`
-- `invert()`
-- `mix(other, weight?)`
-- `alpha(value)`
+## 🏗️ Design
 
-#### Output methods
-
-- `toHex()` / `toHexa()`
-- `toRgb()` / `toRgba()`
-- `toHsl()` / `toHsla()`
-- `toRgbObject()` / `toRgbaObject()`
-- `toHslObject()` / `toHslaObject()`
-- `toState()` / `toString()`
-
-### Low-level helpers
-
-- Parsing: `parseColor`, `parseColorState`, `parseHex`, `parseRgb`, `parseHsl`
-- Conversion: `rgbToHex`, `rgbaToHexa`, `rgbToHsl`, `rgbToHsla`, `hslToRgb`
-- Manipulation: `lighten`, `darken`, `saturate`, `desaturate`, `invert`, `mix`, `withAlpha`
-- ANSI terminal compatibility: `ansi`, `paint`, `dim`, `gray`, `cyan`, `green`, `yellow`, `red`, `magenta`
-
-## 🏗️ Design decisions
-
-- **Zero runtime dependencies.** Small install and predictable behavior.
-- **Immutable fluent API.** Each operation returns a new color chain.
-- **Modular internals.** Parsing, conversion, manipulation, and formatting live in separate domains.
-- **Pragmatic compatibility.** Includes ANSI helpers used by `@santana-org/logger`.
+- **Zero dependencies** — small, predictable, no surprises.
+- **Immutable API** — every operation returns a new instance.
+- **Modular internals** — parsing, conversion, and manipulation are independent.
+- **ANSI support** — built-in terminal helpers used by `@santana-org/logger`.
 
 ## 📄 License
 
-MIT © [santana-org](https://github.com/santana-org) — contributions are welcome, see [CONTRIBUTING](https://github.com/santana-org/.github/blob/main/CONTRIBUTING.md).
+MIT © [santana-org](https://github.com/santana-org)
