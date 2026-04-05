@@ -135,9 +135,13 @@ export class Faker {
   }
 
   /**
-   * Sets the RNG seed for deterministic output.
-   * @param seed - Seed value.
-   * @returns Current faker instance.
+   * Set the seed for reproducible random generation
+   *
+   * @example
+   * ```ts
+   * faker.seed(12345)
+   * faker.person.firstName() // Will always return the same value for this seed
+   * ```
    */
   seed(seed: number): this {
     this.random.seed(seed)
@@ -145,9 +149,13 @@ export class Faker {
   }
 
   /**
-   * Switches locale data used by locale-aware providers.
-   * @param locale - Locale key.
-   * @returns Current faker instance.
+   * Set the locale for data generation
+   *
+   * @example
+   * ```ts
+   * faker.setLocale("es")
+   * faker.person.firstName() // Will return Spanish names
+   * ```
    */
   setLocale(locale: Locale): this {
     this.currentLocale = locale
@@ -160,32 +168,28 @@ export class Faker {
   }
 
   /**
-   * Returns the active locale.
-   * @returns Current locale.
+   * Get the current locale
    */
   getLocale(): Locale {
     return this.currentLocale
   }
 
   /**
-   * Lists all registered locale keys.
-   * @returns Available locales.
+   * Get available locales
    */
   getAvailableLocales(): Locale[] {
     return Object.keys(locales) as Locale[]
   }
 
   private resolveLocaleData(locale: Locale): LocaleData {
-    const fallbackLocale = locales.en ?? Object.values(locales)[0]
+    const fallbackLocale = locales["en"] ?? Object.values(locales)[0]
     if (!fallbackLocale) {
       throw new Error("No locale data available")
     }
-    // Keep generation operational even when a requested locale is unavailable.
     return locales[locale] ?? fallbackLocale
   }
 
   private reinitializeProviders(): void {
-    // Mutate existing provider instances to preserve references held by callers.
     Object.assign(this.person, new PersonProvider(this.random, this.localeData))
     Object.assign(this.location, new LocationProvider(this.random, this.localeData))
     Object.assign(this.internet, new InternetProvider(this.random, this.localeData))
@@ -212,16 +216,8 @@ export class Faker {
   }
 }
 
-/**
- * Creates a new faker instance.
- * @param config - Faker initialization options.
- * @returns Faker instance.
- */
 export function createFaker(config: FakerConfig = {}): Faker {
   return new Faker(config)
 }
 
-/**
- * Shared default faker instance.
- */
 export const faker = new Faker()

@@ -2,9 +2,6 @@ import type { LocaleData } from "../locales/index.js"
 import type { MersenneTwister } from "../random.js"
 import type { Gender, Person, PersonNameOptions, PersonOptions, Sex } from "../types.js"
 
-/**
- * Generates person-related profile and identity data.
- */
 export class PersonProvider {
   constructor(
     private readonly random: MersenneTwister,

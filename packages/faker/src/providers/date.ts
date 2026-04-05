@@ -1,9 +1,6 @@
 import type { MersenneTwister } from "../random.js"
 import type { DateOptions } from "../types.js"
 
-/**
- * Generates date and time related values.
- */
 export class DateProvider {
   constructor(private readonly random: MersenneTwister) {}
 

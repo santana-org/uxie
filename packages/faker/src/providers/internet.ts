@@ -10,9 +10,6 @@ import type {
   UsernameOptions,
 } from "../types.js"
 
-/**
- * Generates internet-related identifiers, URLs, and network values.
- */
 export class InternetProvider {
   constructor(
     private readonly random: MersenneTwister,

@@ -1,9 +1,6 @@
 import type { MersenneTwister } from "../random.js"
 import type { FloatOptions, IntegerOptions, UuidOptions } from "../types.js"
 
-/**
- * Generates numeric values and number-based identifiers.
- */
 export class NumberProvider {
   constructor(private readonly random: MersenneTwister) {}
 
