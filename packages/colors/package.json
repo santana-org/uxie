@@ -8,16 +8,7 @@
     "url": "git+https://github.com/santana-org/uxie.git",
     "directory": "packages/colors"
   },
-  "keywords": [
-    "color",
-    "colors",
-    "hex",
-    "rgb",
-    "hsl",
-    "typescript",
-    "esm",
-    "santana-org"
-  ],
+  "keywords": ["color", "colors", "hex", "rgb", "hsl", "typescript", "esm", "santana-org"],
   "type": "module",
   "exports": {
     ".": {
@@ -34,10 +25,7 @@
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
-  "files": [
-    "dist",
-    "README.md"
-  ],
+  "files": ["dist", "README.md"],
   "scripts": {
     "build": "unbuild",
     "dev": "unbuild --stub",

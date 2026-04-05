@@ -5,9 +5,9 @@ import {
   lighten,
   parseColor,
   parseColorState,
-  rgbaToHexa,
   rgbToHex,
   rgbToHsl,
+  rgbaToHexa,
 } from "../index.js"
 
 describe("parsing", () => {

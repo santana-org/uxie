@@ -27,6 +27,12 @@ export {
   withAlpha,
   withAlphaState,
 } from "./manipulation/color-manipulation.js"
-export { parseColor, parseColorState, parseHex, parseHsl, parseRgb } from "./parsing/color-parser.js"
+export {
+  parseColor,
+  parseColorState,
+  parseHex,
+  parseHsl,
+  parseRgb,
+} from "./parsing/color-parser.js"
 export type { AnsiCode } from "./ansi/ansi-paint.js"
 export type { ColorChain, ColorInput, ColorState, HSL, HSLA, RGB, RGBA } from "./core/types.js"

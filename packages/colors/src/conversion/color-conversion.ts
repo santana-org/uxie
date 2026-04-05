@@ -1,4 +1,11 @@
-import { clampChannel, clampPercent, clampUnit, normalizeHue, roundAlpha, roundPercent } from "../core/math-utils.js"
+import {
+  clampChannel,
+  clampPercent,
+  clampUnit,
+  normalizeHue,
+  roundAlpha,
+  roundPercent,
+} from "../core/math-utils.js"
 import type { HSL, HSLA, RGB, RGBA } from "../core/types.js"
 
 export function rgbToHex(rgb: RGB): string {

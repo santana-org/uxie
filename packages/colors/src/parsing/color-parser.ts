@@ -1,5 +1,11 @@
 import { hslToRgb } from "../conversion/color-conversion.js"
-import { clampChannel, clampPercent, clampUnit, normalizeHue, roundAlpha } from "../core/math-utils.js"
+import {
+  clampChannel,
+  clampPercent,
+  clampUnit,
+  normalizeHue,
+  roundAlpha,
+} from "../core/math-utils.js"
 import type { ColorInput, ColorState, RGB, RGBA } from "../core/types.js"
 
 function toState(rgb: RGB, alpha = 1): ColorState {
@@ -49,9 +55,10 @@ function parseHexToState(input: string): ColorState | null {
 }
 
 function parseRgbToState(input: string): ColorState | null {
-  const match = /^rgba?\(\s*([+-]?\d{1,3})\s*,\s*([+-]?\d{1,3})\s*,\s*([+-]?\d{1,3})(?:\s*,\s*(\d*\.?\d+))?\s*\)$/i.exec(
-    input.trim(),
-  )
+  const match =
+    /^rgba?\(\s*([+-]?\d{1,3})\s*,\s*([+-]?\d{1,3})\s*,\s*([+-]?\d{1,3})(?:\s*,\s*(\d*\.?\d+))?\s*\)$/i.exec(
+      input.trim(),
+    )
 
   if (!match) {
     return null
@@ -69,9 +76,10 @@ function parseRgbToState(input: string): ColorState | null {
 }
 
 function parseHslToState(input: string): ColorState | null {
-  const match = /^hsla?\(\s*([+-]?\d+(?:\.\d+)?)\s*,\s*([+-]?\d+(?:\.\d+)?)%\s*,\s*([+-]?\d+(?:\.\d+)?)%(?:\s*,\s*(\d*\.?\d+))?\s*\)$/i.exec(
-    input.trim(),
-  )
+  const match =
+    /^hsla?\(\s*([+-]?\d+(?:\.\d+)?)\s*,\s*([+-]?\d+(?:\.\d+)?)%\s*,\s*([+-]?\d+(?:\.\d+)?)%(?:\s*,\s*(\d*\.?\d+))?\s*\)$/i.exec(
+      input.trim(),
+    )
 
   if (!match) {
     return null

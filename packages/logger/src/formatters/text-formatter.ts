@@ -1,4 +1,4 @@
-import { ansi, paint, type AnsiCode } from "@santana-org/colors"
+import { type AnsiCode, ansi, paint } from "@santana-org/colors"
 import { type DateFormatterConfig, formatDate } from "../date-formatter.js"
 import { serializeValue } from "../serialization/serialize-value.js"
 import type { Formatter, LogEntry, LogLevel } from "../types.js"

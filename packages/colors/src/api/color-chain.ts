@@ -3,11 +3,12 @@ import {
   formatHsla,
   formatRgb,
   formatRgba,
-  rgbaToHexa,
   rgbToHex,
   rgbToHsl,
   rgbToHsla,
+  rgbaToHexa,
 } from "../conversion/color-conversion.js"
+import type { ColorChain, ColorInput, ColorState } from "../core/types.js"
 import {
   darkenState,
   desaturateState,
@@ -18,7 +19,6 @@ import {
   withAlphaState,
 } from "../manipulation/color-manipulation.js"
 import { parseColorState } from "../parsing/color-parser.js"
-import type { ColorChain, ColorInput, ColorState } from "../core/types.js"
 
 export function createColor(state: ColorState): ColorChain {
   const chain: ColorChain = {
