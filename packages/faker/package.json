@@ -1,6 +1,6 @@
 {
   "name": "@santana-org/faker",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "A comprehensive fake data generator for TypeScript/JavaScript - generate realistic test data for names, addresses, emails, and more",
   "license": "MIT",
   "repository": {
@@ -42,7 +42,10 @@
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
-  "files": ["dist", "README.md"],
+  "files": [
+    "dist",
+    "README.md"
+  ],
   "scripts": {
     "build": "unbuild",
     "dev": "unbuild --stub",
