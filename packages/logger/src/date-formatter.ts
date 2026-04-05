@@ -30,10 +30,17 @@ const FORMATTERS: Record<DateFormat, DateFormatterFn> = {
   custom: (date: Date) => date.toISOString(),
 }
 
+/**
+ * Formats a date using either a built-in format or a caller-provided formatter.
+ * @param date - Date to format.
+ * @param config - Optional formatting configuration.
+ * @returns Formatted date string.
+ */
 export function formatDate(date: Date, config: DateFormatterConfig = {}): string {
   const { format = "iso", formatter } = config
 
   if (formatter) {
+    // Custom formatter takes precedence over named presets.
     return formatter(date)
   }
 

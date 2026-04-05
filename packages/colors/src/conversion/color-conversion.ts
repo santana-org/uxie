@@ -8,17 +8,32 @@ import {
 } from "../core/math-utils.js"
 import type { HSL, HSLA, RGB, RGBA } from "../core/types.js"
 
+/**
+ * Converts an RGB color to a six-digit hexadecimal string.
+ * @param rgb - RGB components.
+ * @returns Hex color string in `#rrggbb` format.
+ */
 export function rgbToHex(rgb: RGB): string {
   const toHex = (value: number) => clampChannel(value).toString(16).padStart(2, "0")
   return `#${toHex(rgb.r)}${toHex(rgb.g)}${toHex(rgb.b)}`
 }
 
+/**
+ * Converts an RGBA color to an eight-digit hexadecimal string.
+ * @param rgba - RGBA components.
+ * @returns Hex color string in `#rrggbbaa` format.
+ */
 export function rgbaToHexa(rgba: RGBA): string {
   const alpha = clampChannel(clampUnit(rgba.a) * 255)
   const toHex = (value: number) => clampChannel(value).toString(16).padStart(2, "0")
   return `#${toHex(rgba.r)}${toHex(rgba.g)}${toHex(rgba.b)}${toHex(alpha)}`
 }
 
+/**
+ * Converts an RGB color to HSL.
+ * @param rgb - RGB components.
+ * @returns HSL representation with rounded percentage channels.
+ */
 export function rgbToHsl(rgb: RGB): HSL {
   const r = clampChannel(rgb.r) / 255
   const g = clampChannel(rgb.g) / 255
@@ -33,6 +48,7 @@ export function rgbToHsl(rgb: RGB): HSL {
   const l = (max + min) / 2
 
   if (delta !== 0) {
+    // Saturation uses different formulas on each side of the lightness midpoint.
     s = l > 0.5 ? delta / (2 - max - min) : delta / (max + min)
 
     switch (max) {
@@ -55,12 +71,18 @@ export function rgbToHsl(rgb: RGB): HSL {
   }
 }
 
+/**
+ * Converts an HSL color to RGB.
+ * @param hsl - HSL components.
+ * @returns RGB representation.
+ */
 export function hslToRgb(hsl: HSL): RGB {
   const h = normalizeHue(hsl.h) / 360
   const s = clampUnit(hsl.s / 100)
   const l = clampUnit(hsl.l / 100)
 
   if (s === 0) {
+    // Grayscale colors are independent of hue, so all channels collapse to lightness.
     const gray = clampChannel(l * 255)
     return { r: gray, g: gray, b: gray }
   }
@@ -85,6 +107,11 @@ export function hslToRgb(hsl: HSL): RGB {
   }
 }
 
+/**
+ * Converts an RGBA color to HSLA.
+ * @param rgba - RGBA components.
+ * @returns HSLA representation.
+ */
 export function rgbToHsla(rgba: RGBA): HSLA {
   return {
     ...rgbToHsl(rgba),
@@ -92,14 +119,29 @@ export function rgbToHsla(rgba: RGBA): HSLA {
   }
 }
 
+/**
+ * Formats RGB components as a CSS `rgb()` string.
+ * @param rgb - RGB components.
+ * @returns CSS color string.
+ */
 export function formatRgb(rgb: RGB): string {
   return `rgb(${clampChannel(rgb.r)}, ${clampChannel(rgb.g)}, ${clampChannel(rgb.b)})`
 }
 
+/**
+ * Formats RGBA components as a CSS `rgba()` string.
+ * @param rgba - RGBA components.
+ * @returns CSS color string.
+ */
 export function formatRgba(rgba: RGBA): string {
   return `rgba(${clampChannel(rgba.r)}, ${clampChannel(rgba.g)}, ${clampChannel(rgba.b)}, ${roundAlpha(rgba.a)})`
 }
 
+/**
+ * Formats HSL components as a CSS `hsl()` string.
+ * @param hsl - HSL components.
+ * @returns CSS color string.
+ */
 export function formatHsl(hsl: HSL): string {
   const hue = Math.round(normalizeHue(hsl.h))
   const saturation = Math.round(clampPercent(hsl.s))
@@ -107,6 +149,11 @@ export function formatHsl(hsl: HSL): string {
   return `hsl(${hue}, ${saturation}%, ${lightness}%)`
 }
 
+/**
+ * Formats HSLA components as a CSS `hsla()` string.
+ * @param hsla - HSLA components.
+ * @returns CSS color string.
+ */
 export function formatHsla(hsla: HSLA): string {
   return `${formatHsl(hsla).replace("hsl", "hsla").replace(")", "")}, ${roundAlpha(hsla.a)})`
 }

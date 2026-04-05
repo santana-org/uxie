@@ -22,6 +22,11 @@ function buildDateFormatterConfig(config: FormatterConfig): DateFormatterConfig 
   return dateConfig
 }
 
+/**
+ * Creates a JSON log formatter suitable for machine parsing.
+ * @param config - Formatter behavior options.
+ * @returns Formatter function.
+ */
 export function createJsonFormatter(config: FormatterConfig = {}): Formatter {
   return (entry: LogEntry): string => {
     const output: JsonLogOutput = {
@@ -39,6 +44,7 @@ export function createJsonFormatter(config: FormatterConfig = {}): Formatter {
 
     if (entry.args.length > 0) {
       output.data = entry.args.map((arg) =>
+        // Apply recursive serialization so redaction and Error handling stay consistent.
         config.redact !== undefined
           ? serializeValue(arg, { redact: config.redact })
           : serializeValue(arg),

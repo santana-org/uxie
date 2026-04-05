@@ -19,10 +19,20 @@ function hasToJSON(value: object): value is JsonSerializable {
   return "toJSON" in value && typeof value.toJSON === "function"
 }
 
+/**
+ * Checks whether a value is an `Error` instance.
+ * @param value - Value to inspect.
+ * @returns Type guard for `Error`.
+ */
 export function isError(value: unknown): value is Error {
   return value instanceof Error
 }
 
+/**
+ * Serializes an `Error` into a JSON-safe object.
+ * @param error - Error value.
+ * @returns Serializable error payload.
+ */
 export function serializeError(error: Error): SerializedError {
   return {
     name: error.name,
@@ -31,6 +41,12 @@ export function serializeError(error: Error): SerializedError {
   }
 }
 
+/**
+ * Recursively serializes values for safe structured logging.
+ * @param value - Value to serialize.
+ * @param options - Serialization options.
+ * @returns JSON-safe value.
+ */
 export function serializeValue(value: unknown, options: SerializeOptions = {}): unknown {
   if (value === null || value === undefined) {
     return value
@@ -41,6 +57,7 @@ export function serializeValue(value: unknown, options: SerializeOptions = {}): 
   }
 
   if (typeof value === "object" && hasToJSON(value)) {
+    // Delegate custom object serialization before recursive traversal.
     return serializeValue(value.toJSON(), options)
   }
 

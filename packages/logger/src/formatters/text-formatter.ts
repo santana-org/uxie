@@ -31,6 +31,11 @@ function buildDateFormatterConfig(config: FormatterConfig): DateFormatterConfig 
   return dateConfig
 }
 
+/**
+ * Creates a human-readable text formatter for terminal logs.
+ * @param config - Formatter behavior options.
+ * @returns Formatter function.
+ */
 export function createTextFormatter(config: FormatterConfig = {}): Formatter {
   return (entry: LogEntry, colors: boolean): string => {
     const parts: string[] = []
@@ -57,6 +62,7 @@ export function createTextFormatter(config: FormatterConfig = {}): Formatter {
             config.redact !== undefined
               ? serializeValue(arg, { redact: config.redact })
               : serializeValue(arg)
+          // Pretty-print objects for readability while keeping primitives compact.
           return typeof serialized === "object"
             ? JSON.stringify(serialized, null, 2)
             : String(serialized)
@@ -69,4 +75,7 @@ export function createTextFormatter(config: FormatterConfig = {}): Formatter {
   }
 }
 
+/**
+ * Default text formatter with default configuration.
+ */
 export const defaultFormatter = createTextFormatter()

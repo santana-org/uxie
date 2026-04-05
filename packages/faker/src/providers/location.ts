@@ -2,6 +2,9 @@ import type { LocaleData } from "../locales/index.js"
 import type { MersenneTwister } from "../random.js"
 import type { Address, AddressOptions } from "../types.js"
 
+/**
+ * Generates address and geolocation-related data.
+ */
 export class LocationProvider {
   constructor(
     private readonly random: MersenneTwister,

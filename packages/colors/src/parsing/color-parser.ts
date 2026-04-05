@@ -108,11 +108,18 @@ function stateFromObject(input: Exclude<ColorInput, string>): ColorState {
   return toState(input as RGB)
 }
 
+/**
+ * Parses any supported color input into the library's normalized state shape.
+ * @param input - Color string or object representation.
+ * @returns Normalized color state with clamped channels.
+ * @throws Error when the string format is unsupported.
+ */
 export function parseColorState(input: ColorInput): ColorState {
   if (typeof input !== "string") {
     return stateFromObject(input)
   }
 
+  // Keep parser order deterministic so ambiguous-looking inputs resolve consistently.
   const parsers = [parseHexToState, parseRgbToState, parseHslToState]
   for (const parser of parsers) {
     const parsed = parser(input)
@@ -124,20 +131,40 @@ export function parseColorState(input: ColorInput): ColorState {
   throw new Error(`Unsupported color format: ${input}`)
 }
 
+/**
+ * Parses a color string into an RGB object.
+ * @param input - Color string in hex, rgb(a), or hsl(a) format.
+ * @returns Parsed RGB channels.
+ */
 export function parseColor(input: string): RGB {
   return parseColorState(input).rgb
 }
 
+/**
+ * Parses a hex color string into RGB channels.
+ * @param input - Hex color string.
+ * @returns Parsed RGB channels, or `null` for invalid input.
+ */
 export function parseHex(input: string): RGB | null {
   const parsed = parseHexToState(input)
   return parsed?.rgb ?? null
 }
 
+/**
+ * Parses an `rgb()` or `rgba()` string into RGB channels.
+ * @param input - CSS rgb/rgba color string.
+ * @returns Parsed RGB channels, or `null` for invalid input.
+ */
 export function parseRgb(input: string): RGB | null {
   const parsed = parseRgbToState(input)
   return parsed?.rgb ?? null
 }
 
+/**
+ * Parses an `hsl()` or `hsla()` string into RGB channels.
+ * @param input - CSS hsl/hsla color string.
+ * @returns Parsed RGB channels, or `null` for invalid input.
+ */
 export function parseHsl(input: string): RGB | null {
   const parsed = parseHslToState(input)
   return parsed?.rgb ?? null

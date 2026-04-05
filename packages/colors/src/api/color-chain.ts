@@ -20,6 +20,11 @@ import {
 } from "../manipulation/color-manipulation.js"
 import { parseColorState } from "../parsing/color-parser.js"
 
+/**
+ * Creates an immutable fluent color API from a normalized color state.
+ * @param state - Canonical RGB + alpha representation.
+ * @returns Chainable color transformer and formatter.
+ */
 export function createColor(state: ColorState): ColorChain {
   const chain: ColorChain = {
     lighten(amount) {
@@ -80,6 +85,7 @@ export function createColor(state: ColorState): ColorChain {
       }
     },
     toString() {
+      // Preserve alpha information in default string output when transparency is present.
       return state.alpha < 1 ? chain.toHexa() : chain.toHex()
     },
   }
@@ -87,6 +93,11 @@ export function createColor(state: ColorState): ColorChain {
   return chain
 }
 
+/**
+ * Parses a color input into a chainable color API.
+ * @param input - Color string or color object.
+ * @returns Chainable color transformer and formatter.
+ */
 export function color(input: ColorInput): ColorChain {
   return createColor(parseColorState(input))
 }

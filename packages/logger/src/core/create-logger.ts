@@ -32,6 +32,11 @@ function resolveFormatter(options: LoggerOptions) {
   )
 }
 
+/**
+ * Creates a logger instance with configurable formatting, output, and level filtering.
+ * @param options - Logger behavior options.
+ * @returns Logger instance.
+ */
 export function createLogger(options: LoggerOptions = {}): Logger {
   const {
     level: minLevel = "debug",
@@ -46,6 +51,7 @@ export function createLogger(options: LoggerOptions = {}): Logger {
 
   function log(level: LogLevel, message: string, ...args: unknown[]): void {
     if (!isLevelEnabled(level, minLevel)) {
+      // Skip work early when this level is below the configured threshold.
       return
     }
 
@@ -76,6 +82,7 @@ export function createLogger(options: LoggerOptions = {}): Logger {
       createLogger({
         ...options,
         level: minLevel,
+        // Child logger keeps parent runtime behavior and only changes identity label.
         label: childLabel,
         timestamps,
         format,

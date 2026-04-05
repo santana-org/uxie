@@ -1,6 +1,9 @@
 import type { LocaleData } from "../locales/index.js"
 import type { MersenneTwister } from "../random.js"
 
+/**
+ * Generates random strings and token-like text values.
+ */
 export class StringProvider {
   constructor(
     private readonly random: MersenneTwister,
