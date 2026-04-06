@@ -182,7 +182,7 @@ export class Faker {
   }
 
   private resolveLocaleData(locale: Locale): LocaleData {
-    const fallbackLocale = locales["en"] ?? Object.values(locales)[0]
+    const fallbackLocale = locales.en ?? Object.values(locales)[0]
     if (!fallbackLocale) {
       throw new Error("No locale data available")
     }
