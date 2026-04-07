@@ -2,10 +2,11 @@
 export { createCli } from "./runtime/create-cli.js"
 
 // Branding helpers
-export { buildBrandHeader, createBrandHeader, resolveBranding } from "./branding/index.js"
+export { buildBrandHeader, createBrandHeader, resolveBranding } from "./branding/brand-header.js"
 
 // Output helpers
-export { buildHelp, CliInputError, createHelpPrinter, formatCliError } from "./output/index.js"
+export { buildHelp, createHelpPrinter } from "./output/help-output.js"
+export { CliInputError, formatCliError } from "./output/cli-error.js"
 
 // Parsing helpers
 export {
@@ -13,10 +14,10 @@ export {
   parsePositionals,
   toArgumentSpec,
   toOptionSpec,
-} from "./parsing/index.js"
+} from "./parsing/option-parsing.js"
 
 // Runtime helpers
-export { buildPath, executeCommand } from "./runtime/index.js"
+export { buildPath, executeCommand } from "./runtime/command-runner.js"
 
 // Shared types
 export type {

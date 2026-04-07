@@ -1,6 +1,6 @@
-import { formatCliError } from "../output/index.js"
+import { formatCliError } from "../output/cli-error.js"
 import { executeCommand } from "./command-runner.js"
-import { createHelpPrinter } from "../output/index.js"
+import { createHelpPrinter } from "../output/help-output.js"
 import type { CliAction, CliCommandBuilder, CliOptions, CliWriter, CommandSpec } from "../types.js"
 
 function createWriter(writer?: CliWriter): CliWriter {
