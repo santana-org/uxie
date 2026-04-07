@@ -1,6 +1,6 @@
 {
   "name": "@santana-org/cli",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "A polished commander-style CLI builder with premium DX for the Santana Org ecosystem",
   "license": "MIT",
   "repository": {
@@ -8,7 +8,16 @@
     "url": "git+https://github.com/santana-org/uxie.git",
     "directory": "packages/cli"
   },
-  "keywords": ["cli", "command-line", "commander", "typescript", "esm", "ux", "dx", "santana-org"],
+  "keywords": [
+    "cli",
+    "command-line",
+    "commander",
+    "typescript",
+    "esm",
+    "ux",
+    "dx",
+    "santana-org"
+  ],
   "type": "module",
   "exports": {
     ".": {
@@ -25,7 +34,10 @@
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
-  "files": ["dist", "README.md"],
+  "files": [
+    "dist",
+    "README.md"
+  ],
   "scripts": {
     "build": "unbuild",
     "dev": "unbuild --stub",
